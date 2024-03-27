@@ -1,0 +1,20 @@
+﻿@model List<Movie>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Titre</th>
+            <th>Actions</th>
+        </tr>        
+    </thead>
+    @foreach (Movie movie in Model)
+    {
+        <tr>
+            <td>@movie.Id</td>
+            <td>@movie.Title</td>
+            <td><a class="btn btn-outline-dark" asp-controller="Movie" asp-action="Details" asp-route-data="@movie.Id">Détails</a></td>
+        </tr>
+    }
+</table>
+
+

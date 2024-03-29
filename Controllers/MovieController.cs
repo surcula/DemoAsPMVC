@@ -15,12 +15,12 @@ namespace DemoAsPMVC.Controllers
 
         public IActionResult Index()
         {           
-            return View(_movieService.movieList[0]);
+            return View();
         }
         public IActionResult Liste()
         {
                       
-            return View(_movieService.movieList);
+            return View(_movieService.GetAll());
         }
 
         public IActionResult Details(int id) 
@@ -37,8 +37,16 @@ namespace DemoAsPMVC.Controllers
         [HttpPost]
         public IActionResult Create(Movie movie)
         {
-           _movieService.Create(movie);
-            return RedirectToAction("Liste");
+            if (ModelState.IsValid)
+            {
+                _movieService.Create(movie);
+                return RedirectToAction("Liste");
+            }
+            else
+            {
+                return View(movie);
+            }
+           
         }
         public IActionResult Edit(int id)
         {
@@ -48,8 +56,8 @@ namespace DemoAsPMVC.Controllers
         [HttpPost]
         public IActionResult Edit(Movie movie)
         {
-            Movie m = _movieService.Update(movie);
-            return RedirectToAction("Details", "Movie", new { id = m.Id });
+            _movieService.Update(movie);
+            return RedirectToAction("Liste");
         }
         
 

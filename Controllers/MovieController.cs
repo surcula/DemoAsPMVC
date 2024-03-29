@@ -51,5 +51,12 @@ namespace DemoAsPMVC.Controllers
             Movie m = _movieService.Update(movie);
             return RedirectToAction("Details", "Movie", new { id = m.Id });
         }
+        
+
+        public IActionResult Delete(int id)
+        {
+            _movieService.Delete(id);
+            return RedirectToAction("Liste");
+        }
     }
 }

@@ -41,5 +41,9 @@ namespace DemoAsPMVC.Services
                 throw new InvalidOperationException("Movie not found.");
             }
         }
+        public void Delete(int id)
+        {
+            movieList.Remove(GetById(id));
+        }
     }
 }

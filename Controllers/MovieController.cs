@@ -40,5 +40,16 @@ namespace DemoAsPMVC.Controllers
            _movieService.Create(movie);
             return RedirectToAction("Liste");
         }
+        public IActionResult Edit(int id)
+        {
+            Movie m = _movieService.GetById(id);
+            return View(m);
+        }
+        [HttpPost]
+        public IActionResult Edit(Movie movie)
+        {
+            Movie m = _movieService.Update(movie);
+            return RedirectToAction("Details", "Movie", new { id = m.Id });
+        }
     }
 }

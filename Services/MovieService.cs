@@ -25,5 +25,21 @@ namespace DemoAsPMVC.Services
             movie.Id = movieList.Max(m => m.Id) + 1;
             movieList.Add(movie);
         }
+        public Movie Update(Movie movie)
+        {
+            Movie existingMovie = GetById(movie.Id);
+            if (existingMovie != null)
+            {
+                existingMovie.Title = movie.Title;
+                existingMovie.Realisateur = movie.Realisateur;
+                existingMovie.Acteur = movie.Acteur;
+                existingMovie.AnneeSortie = movie.AnneeSortie;
+                return existingMovie;
+            }
+            else
+            {
+                throw new InvalidOperationException("Movie not found.");
+            }
+        }
     }
 }

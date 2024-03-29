@@ -1,4 +1,5 @@
 ﻿@model List<Movie>
+@* @model accueil le seul et unique objet que la vue peut accepter et j'y accède dans la vue grace a model' *@ 
 <table class="table">
     <thead>
         <tr>
@@ -12,7 +13,7 @@
         <tr>
             <td>@movie.Id</td>
             <td>@movie.Title</td>
-            <td><a class="btn btn-outline-dark" asp-controller="Movie" asp-action="Details" asp-route-data="@movie.Id">Détails</a></td>
+            <td><a class="btn btn-outline-dark" asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">Détails</a></td>
         </tr>
     }
 </table>

@@ -14,8 +14,7 @@ namespace DemoAsPMVC.Controllers
         }
 
         public IActionResult Index()
-        {
-           
+        {           
             return View(_movieService.movieList[0]);
         }
         public IActionResult Liste()
@@ -26,7 +25,7 @@ namespace DemoAsPMVC.Controllers
 
         public IActionResult Details(int id) 
         {
-            Movie m = _movieService.movieList.Where(m => m.Id == id).SingleOrDefault();
+            Movie m = _movieService.GetById(id);            
             return View(m); 
         }
        
@@ -38,8 +37,7 @@ namespace DemoAsPMVC.Controllers
         [HttpPost]
         public IActionResult Create(Movie movie)
         {
-            movie.Id = _movieService.movieList.Max(m => m.Id) + 1;
-            _movieService.movieList.Add(movie);
+           _movieService.Create(movie);
             return RedirectToAction("Liste");
         }
     }

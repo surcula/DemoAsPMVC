@@ -14,5 +14,16 @@ namespace DemoAsPMVC.Services
             movieList.Add(new Movie { Id = 3, Title = "Star wars IV", Realisateur = "George Lucas", Acteur = "MarK Hamill", AnneeSortie = 1977 });
             movieList.Add(new Movie { Id = 4, Title = "AlienS", Realisateur = "Ridley Scott", Acteur = "Sigourney Weaver", AnneeSortie = 1986 });
         }
+
+        public Movie GetById(int id)
+        {
+            return movieList.Where(m => m.Id == id).SingleOrDefault();
+        }
+
+        public void Create(Movie movie)
+        {
+            movie.Id = movieList.Max(m => m.Id) + 1;
+            movieList.Add(movie);
+        }
     }
 }

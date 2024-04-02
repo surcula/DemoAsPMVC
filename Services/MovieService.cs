@@ -27,19 +27,26 @@ namespace DemoAsPMVC.Services
                 {
                     cmd.CommandText = "Select * FROM Movie";
                     sql.Open();
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    try
                     {
-                        while (reader.Read())
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            movieListDb.Add(new Movie
+                            while (reader.Read())
                             {
-                                Id = (int)reader["Id"],
-                                Title = (string)reader["Title"],
-                                Realisateur = (string)reader["Realisateur"],
-                                Acteur = (string)reader["Acteur"],
-                                AnneeSortie = (int)reader["AnneeDeSortie"]
-                            });
+                                movieListDb.Add(new Movie
+                                {
+                                    Id = (int)reader["Id"],
+                                    Title = (string)reader["Title"],
+                                    Realisateur = (string)reader["Realisateur"],
+                                    Acteur = (string)reader["Acteur"],
+                                    AnneeSortie = (int)reader["AnneeDeSortie"]
+                                });
+                            }
                         }
+                    }
+                    catch (Exception)
+                    {
+                        throw;
                     }
                     sql.Close();
                 }
@@ -49,7 +56,7 @@ namespace DemoAsPMVC.Services
 
         public Movie GetById(int id)
         {
-
+            
             Movie m = new Movie();
             using (SqlConnection sql = new SqlConnection(_connextionString))
             {
@@ -58,18 +65,25 @@ namespace DemoAsPMVC.Services
                     cmd.CommandText = "Select * FROM Movie where Id = @id";
                     cmd.Parameters.AddWithValue("id", id);
                     sql.Open();
-                    using(SqlDataReader reader = cmd.ExecuteReader())
+                    try
                     {
-                        if (reader.Read())
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
+                            if (reader.Read())
+                            {
 
-                            m.Id = (int)reader["Id"];
-                            m.Title = (string)reader["Title"];
-                            m.Realisateur = (string)reader["Realisateur"];
-                            m.Acteur = (string)reader["Acteur"];
-                            m.AnneeSortie = (int)reader["AnneeDeSortie"];
-                            
+                                m.Id = (int)reader["Id"];
+                                m.Title = (string)reader["Title"];
+                                m.Realisateur = (string)reader["Realisateur"];
+                                m.Acteur = (string)reader["Acteur"];
+                                m.AnneeSortie = (int)reader["AnneeDeSortie"];
+                            }
                         }
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
                     }
                     sql.Close();
                 }
@@ -95,7 +109,14 @@ namespace DemoAsPMVC.Services
                     command.Parameters.AddWithValue("@AnneeDeSortie", movie.AnneeSortie);
                     command.Parameters.AddWithValue("@Realisateur", movie.Realisateur);
                     command.Parameters.AddWithValue("@Acteur", movie.Acteur);
-                    command.ExecuteNonQuery();                    
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }                    
                 }
                 connection.Close();
             }
@@ -123,7 +144,15 @@ namespace DemoAsPMVC.Services
                     command.Parameters.AddWithValue("Acteur", movie.Acteur);
                     command.Parameters.AddWithValue("Title", movie.Title);
 
-                    command.ExecuteNonQuery();
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
                     
                 }
                 connection.Close();
@@ -143,8 +172,15 @@ namespace DemoAsPMVC.Services
                     // Ajouter des paramètres avec leurs valeurs
                     command.Parameters.AddWithValue("Id",id);
 
-                    command.ExecuteNonQuery();
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Exception)
+                    {
 
+                        throw;
+                    }
                 }
                 connection.Close();
             }

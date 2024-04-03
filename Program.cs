@@ -1,11 +1,17 @@
-using DemoAsPMVC.Services;
+
+using Dal = AspDal.Services;
+using AspDal.Entityes_DAO_Models_DTO;
+using AspDal.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddSingleton<MovieService>();
+
+builder.Services.AddScoped<IMovieRepo, Dal.MovieService>();
+builder.Services.AddScoped<IPersonneRepo, Dal.PersonneService>();
+builder.Services.AddScoped<IMoviePersonneRepo, Dal.MoviePersonneService>();
 
 
 var app = builder.Build();

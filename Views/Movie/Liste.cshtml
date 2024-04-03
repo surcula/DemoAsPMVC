@@ -1,22 +1,48 @@
-﻿@model List<Movie>
-@* @model accueil le seul et unique objet que la vue peut accepter et j'y accède dans la vue grace a model' *@ 
+﻿@using Dal = AspDal.Entityes_DAO_Models_DTO;
+@model IEnumerable<Dal.Movie>
+
+@{
+    ViewData["Title"] = "Liste";
+}
+
+<h1>Liste</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Titre</th>
-            <th>Actions</th>
-        </tr>        
-    </thead>
-    @foreach (Movie movie in Model)
-    {
-        <tr>
-            <td>@movie.Id</td>
-            <td>@movie.Title</td>
-            <td><a class="btn btn-outline-dark" asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">Détails</a></td>
-            <td><a class="btn btn-outline-dark" asp-controller="Movie" asp-action="Delete" asp-route-id="@movie.Id">Delete</a></td>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th></th>
         </tr>
-    }
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RealisateurId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
 </table>
-
-

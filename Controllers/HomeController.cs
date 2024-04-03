@@ -27,10 +27,14 @@ namespace DemoAsPMVC.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error(string message)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            //Attention la vue peut pas avoir de string en parametre sinon il va chercher la vue qui s'appelle "Le message de l'erreur"
+            TempData["ErrorMessage"] = message;
+            _logger.LogError(message);
+            return View(TempData);
+          //  return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

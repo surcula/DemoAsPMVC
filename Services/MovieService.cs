@@ -176,10 +176,10 @@ namespace DemoAsPMVC.Services
                     {
                         command.ExecuteNonQuery();
                     }
-                    catch (Exception)
+                    catch (SqlException ex)
                     {
 
-                        throw;
+                        throw ex;
                     }
                 }
                 connection.Close();
